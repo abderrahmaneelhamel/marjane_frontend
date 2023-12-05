@@ -1,6 +1,8 @@
+import { ResponsibleService } from './../../services/responsible/responsible.service';
+import { Responsible } from 'src/app/Interfaces/Responsible';
 import { Component, OnInit } from '@angular/core';
-import { PromotionService } from 'src/app/services/promotion.service';
-import { Promotion } from '../../Promotion';
+import { PromotionService } from 'src/app/services/promotion/promotion.service';
+import { Promotion } from '../../Interfaces/Promotion';
 
 @Component({
   selector: 'app-table',
@@ -10,30 +12,33 @@ import { Promotion } from '../../Promotion';
 export class TableComponent implements OnInit {
 
   public promotions: Promotion[] = [];
-  public newPromotion: Promotion = {
-    promotionDescription: '',
-    discountPercentage: 0,
-    productCategory: '',
-    startTime: '',
-    endTime: '',
-    quantity: 0,
-    loyaltyPointsEarned: 0,
-    product: {
-      id: 0,
-      name: '',
-      price: 0,
-      quantity: 0,
-      category: null
-    },
-    admin: undefined,
-    promotionApprovals: []
-  };
+  public responsibles: Responsible[] = [];
+  // public newPromotion: Promotion = {
+  //   promotionDescription: '',
+  //   discountPercentage: 0,
+  //   productCategory: '',
+  //   startTime: '',
+  //   endTime: '',
+  //   quantity: 0,
+  //   loyaltyPointsEarned: 0,
+  //   product: {
+  //     id: 0,
+  //     name: '',
+  //     price: 0,
+  //     quantity: 0,
+  //     category: null
+  //   },
+  //   admin: undefined,
+  //   promotionApprovals: []
+  // };
+  
   
 
-  constructor(private promotionService: PromotionService) {}
+  constructor(private promotionService: PromotionService, private responsibleService: ResponsibleService) {}
 
   ngOnInit(): void {
     this.getPromotions();
+    
   }
 
   onSubmit() {
@@ -73,17 +78,29 @@ export class TableComponent implements OnInit {
     );
   }
 
-  createPromotion() {
-    this.promotionService.createPromotion(this.newPromotion).subscribe(
-      (createdPromotion) => {
-        console.log('Promotion created:', createdPromotion);
-        this.getPromotions();
+  getResponsibles() {
+    this.responsibleService.getResponisbles().subscribe(
+      (promotions) => {
+        this.responsibles = this.responsibles;
+        console.log(this.responsibles);
       },
       (error) => {
-        console.error('Error creating promotion:', error);
+        console.error(error);
       }
     );
   }
+
+  // createPromotion() {
+  //   this.promotionService.createPromotion(this.newPromotion).subscribe(
+  //     (createdPromotion) => {
+  //       console.log('Promotion created:', createdPromotion);
+  //       this.getPromotions();
+  //     },
+  //     (error) => {
+  //       console.error('Error creating promotion:', error);
+  //     }
+  //   );
+  // }
 
   updatePromotion(promotion: Promotion) {
     this.promotionService.updatePromotion(promotion).subscribe(

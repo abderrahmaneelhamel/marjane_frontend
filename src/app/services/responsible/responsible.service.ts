@@ -15,7 +15,5 @@ export class ResponsibleService {
     console.log(this.http.get<Responsible[]>(this.apiUrl));
     return this.http.get<Responsible[]>(this.apiUrl);
   }
-
-  
   
 }

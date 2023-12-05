@@ -93,7 +93,7 @@
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Discount</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">End Promo</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Status</th>
-                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">Actions</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-center leading-4 text-blue-500 tracking-wider">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-white">
@@ -116,8 +116,9 @@
                         </span>
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">{{ promotion.statut }}</td>
-                        <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
-                            <button (click)="deletePromotion(promotion.id)" class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">delete</button>
+                        <td class="px-6 py-4 flex justify-between text-right border-b border-gray-500 text-sm leading-5">
+                            <button (click)="deletePromotion(promotion.id)" class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">Update</button>
+                            <button (click)="deletePromotion(promotion.id)" class="px-5 py-2 border-red-500 border text-red-500 rounded transition duration-300 hover:bg-red-700 hover:text-white focus:outline-none">delete</button>
                         </td>
               </tr>
             </tbody>

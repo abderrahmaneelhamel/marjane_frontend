@@ -12,7 +12,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
-import { TableComponent } from './components/table/table.component';
+import { TableComponent } from './components/tables/PromotionsTable/PromotionsTable.component';
 import { PopupComponent } from './components/popup/popup.component';
 
 const appRoutes: Routes = [

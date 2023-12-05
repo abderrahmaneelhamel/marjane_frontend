@@ -36,6 +36,31 @@ export class TableComponent implements OnInit {
     this.getPromotions();
   }
 
+  onSubmit() {
+    this.promotionService.createPromotion(this.newPromotion).subscribe(
+      (promotion) => {
+        this.promotions.push(promotion);
+        this.newPromotion = {
+          promotionDescription: '',
+          discountPercentage: 0,
+          productCategory: '',
+          startTime: '',
+          endTime: '',
+          quantity: 0,
+          loyaltyPointsEarned: 0,
+          product: {
+            id: 0,
+            name: '',
+            price: 0,
+            quantity: 0,
+            category: null
+          },
+          admin: undefined,
+          promotionApprovals: []
+        }
+      })
+  }
+
   getPromotions() {
     this.promotionService.getPromotions().subscribe(
       (promotions) => {

@@ -1,10 +1,9 @@
-<app-popup>
+<app-popup name="Add Promotion" color="blue">
     <form class="p-4 md:p-5" (ngSubmit)="onSubmit()">
         <div class="grid gap-4 mb-4 grid-cols-2">
           <div class="col-span-2 sm:col-span-1">
             <label for="discount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discount Percentage</label>
             <input type="number" name="discount" [(ngModel)]="newPromotion.reduction" id="discount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="9" required="">
-            {{ newPromotion.reduction }}
           </div>
           <div class="col-span-2 sm:col-span-1">
             <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
@@ -12,17 +11,17 @@
           </div>
           <div class="col-span-2 sm:col-span-1">
             <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-            <select id="category" [(ngModel)]="newPromotion.categorie" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+            <select id="category" [(ngModel)]="category.id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
               <option selected="">Select category</option>
-              <option value="TV">TV/Monitors</option>
-              <option value="PC">PC</option>
-              <option value="GA">Gaming/Console</option>
-              <option value="PH">Phones</option>
+              <option value="1">TV/Monitors</option>
+              <option value="2">PC</option>
+              <option value="3">Gaming/Console</option>
+              <option value="4">Phones</option>
             </select>
           </div>
           <div class="col-span-2 sm:col-span-1">
             <label for="product" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product</label>
-            <select id="product" [(ngModel)]="newPromotion.produit.id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+            <select id="product" [(ngModel)]="product.id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
               <option selected="">Select product</option>
               <option value="1">Samsung Monitors</option>
               <option value="2">PC Gamer</option>

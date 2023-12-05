@@ -13,15 +13,33 @@ import { Product } from 'src/app/Interfaces/Product';
 })
 export class TableComponent implements OnInit {
 
-  public promotions: Promotion[] = [];
-  public responsibles: Responsible[] = [];
+  public promotions : any;
+  product: Product = {
+    id: 0,
+    name: '',
+    price: 0,
+    quantity: 0,
+    category: null
+  };
+  responsibles: Responsible[] = [];
+  responsible: Responsible = {
+    id: 0,
+    name: '',
+    email: '',
+    password: '',
+  };
+
+  category : Category = {
+    id: 0,
+    name: '',
+  };
   newPromotion: Promotion = {
-    responsible: {} as Responsible,
-    categorie: {} as Category,
-    produit: {} as Product,
+    responsible: this.responsible,
+    categorie: this.category,
+    produit: this.product,
     datepromo: '', 
     reduction: 0,
-    statut: null, 
+    statut: 'PENDING', 
     quantity: 0
   };
   
@@ -35,10 +53,21 @@ export class TableComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('====================================');
+    console.log(this.newPromotion);
+    console.log('====================================');
     // this.promotionService.createPromotion(this.newPromotion).subscribe(
     //   (promotion) => {
     //     this.promotions.push(promotion);
-    //     this.newPromotion = {}
+    //     this.newPromotion = {
+    //       responsible: {} as Responsible,
+    //       categorie: {} as Category,
+    //       produit: {} as Product,
+    //       datepromo: '', 
+    //       reduction: 0,
+    //       statut: null, 
+    //       quantity: 0
+    //     }
     //   })
   }
 

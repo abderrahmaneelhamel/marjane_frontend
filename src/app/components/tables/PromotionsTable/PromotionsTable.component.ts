@@ -1,27 +1,29 @@
-import { Responsible } from './../../Interfaces/Responsible';
-import { ResponsibleService } from './../../services/responsible/responsible.service';
+import { Responsible } from '../../../Interfaces/Responsible';
+import { ResponsibleService } from '../../../services/responsible/responsible.service';
 import { Component, OnInit } from '@angular/core';
 import { PromotionService } from 'src/app/services/promotion/promotion.service';
-import { Promotion } from '../../Interfaces/Promotion';
+import { Promotion } from '../../../Interfaces/Promotion';
+import { Category } from 'src/app/Interfaces/Category';
+import { Product } from 'src/app/Interfaces/Product';
 
 @Component({
   selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css']
+  templateUrl: './PromotionsTable.component.html',
+  styleUrls: ['./PromotionsTable.component.css']
 })
 export class TableComponent implements OnInit {
 
   public promotions: Promotion[] = [];
   public responsibles: Responsible[] = [];
-  // public newPromotion: Promotion = {
-  //   responsible: undefined,
-  //   categorie: undefined,
-  //   produit: undefined,
-  //   datepromo: '',
-  //   reduction: 0,
-  //   statut: undefined,
-  //   quantity: 0
-  // };
+  newPromotion: Promotion = {
+    responsible: {} as Responsible,
+    categorie: {} as Category,
+    produit: {} as Product,
+    datepromo: '', 
+    reduction: 0,
+    statut: null, 
+    quantity: 0
+  };
   
   
 

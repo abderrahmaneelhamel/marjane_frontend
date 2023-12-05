@@ -14,22 +14,13 @@ export class TableComponent implements OnInit {
   public promotions: Promotion[] = [];
   public responsibles: Responsible[] = [];
   // public newPromotion: Promotion = {
-  //   promotionDescription: '',
-  //   discountPercentage: 0,
-  //   productCategory: '',
-  //   startTime: '',
-  //   endTime: '',
-  //   quantity: 0,
-  //   loyaltyPointsEarned: 0,
-  //   product: {
-  //     id: 0,
-  //     name: '',
-  //     price: 0,
-  //     quantity: 0,
-  //     category: null
-  //   },
-  //   admin: undefined,
-  //   promotionApprovals: []
+  //   responsible: undefined,
+  //   categorie: undefined,
+  //   produit: undefined,
+  //   datepromo: '',
+  //   reduction: 0,
+  //   statut: undefined,
+  //   quantity: 0
   // };
   
   
@@ -42,28 +33,11 @@ export class TableComponent implements OnInit {
   }
 
   onSubmit() {
-    this.promotionService.createPromotion(this.newPromotion).subscribe(
-      (promotion) => {
-        this.promotions.push(promotion);
-        this.newPromotion = {
-          promotionDescription: '',
-          discountPercentage: 0,
-          productCategory: '',
-          startTime: '',
-          endTime: '',
-          quantity: 0,
-          loyaltyPointsEarned: 0,
-          product: {
-            id: 0,
-            name: '',
-            price: 0,
-            quantity: 0,
-            category: null
-          },
-          admin: undefined,
-          promotionApprovals: []
-        }
-      })
+    // this.promotionService.createPromotion(this.newPromotion).subscribe(
+    //   (promotion) => {
+    //     this.promotions.push(promotion);
+    //     this.newPromotion = {}
+    //   })
   }
 
   getPromotions() {

@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TableComponent } from './components/table/table.component';
+import { PopupComponent } from './components/popup/popup.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent},
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
     HomeComponent,
     LoginComponent,
     HeaderComponent,
-    TableComponent
+    TableComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

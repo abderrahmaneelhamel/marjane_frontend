@@ -1,5 +1,5 @@
+import { Responsible } from './../../Interfaces/Responsible';
 import { ResponsibleService } from './../../services/responsible/responsible.service';
-import { Responsible } from 'src/app/Interfaces/Responsible';
 import { Component, OnInit } from '@angular/core';
 import { PromotionService } from 'src/app/services/promotion/promotion.service';
 import { Promotion } from '../../Interfaces/Promotion';
@@ -29,7 +29,7 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPromotions();
-    
+    this.getResponsibles();
   }
 
   onSubmit() {
@@ -54,8 +54,8 @@ export class TableComponent implements OnInit {
 
   getResponsibles() {
     this.responsibleService.getResponisbles().subscribe(
-      (promotions) => {
-        this.responsibles = this.responsibles;
+      (responsibles) => {
+        this.responsibles = responsibles;
         console.log(this.responsibles);
       },
       (error) => {

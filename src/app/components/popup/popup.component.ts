@@ -11,7 +11,7 @@ export class PopupComponent implements OnInit {
   @Input() name!: string;
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.hidden = true;
   }
 
   constructor(){}

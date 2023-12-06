@@ -5,6 +5,7 @@ import { PromotionService } from 'src/app/services/promotion/promotion.service';
 import { Promotion } from '../../../Interfaces/Promotion';
 import { Category } from 'src/app/Interfaces/Category';
 import { Product } from 'src/app/Interfaces/Product';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -13,6 +14,12 @@ import { Product } from 'src/app/Interfaces/Product';
 })
 export class TableComponent implements OnInit {
 
+  public promotionForm! : FormGroup;
+
+
+  constructor(private responsibleService: ResponsibleService, private fb: FormBuilder, private promotionService: PromotionService){
+    
+  }
   public promotions : any;
   product: Product = {
     id: 0,
@@ -22,54 +29,74 @@ export class TableComponent implements OnInit {
     category: null
   };
   responsibles: Responsible[] = [];
-  responsible: Responsible = {
-    id: 0,
-    name: '',
-    email: '',
-    password: '',
-  };
+  // responsible: Responsible = {
+  //   id: 0,
+  //   name: '',
+  //   email: '',
+  //   password: '',
+  // };
 
   category : Category = {
     id: 0,
     name: '',
   };
+
+
+  categories: Category[] = [
+    { id: 1, name: 'Alimentation' },
+    { id: 2, name: 'Vêtements' },
+    { id: 3, name: 'Produits de parfum' }
+  ];
+  products: Product[] = [
+    { id: 1, name: 'Product 1', price: 20.99, quantity: 50, category: { id: 1, name: 'Category 1' } },
+    { id: 2, name: 'Product 2', price: 15.49, quantity: 30, category: { id: 2, name: 'Category 2' } },
+  ];
   newPromotion: Promotion = {
-    responsible: this.responsible,
+    responsible: {} as Responsible,
     categorie: this.category,
     produit: this.product,
-    datepromo: '', 
+    datepromo: '',
     reduction: 0,
-    statut: 'PENDING', 
+    statut: 'PENDING',
     quantity: 0
   };
   
-  
 
-  constructor(private promotionService: PromotionService, private responsibleService: ResponsibleService) {}
 
   ngOnInit(): void {
+    this.promotionForm = this.fb.group({
+      dateDebut: this.fb.control('', [Validators.required]),
+      precentage: this.fb.control(0, [Validators.required]),
+      category: this.fb.control(null, [Validators.required]),
+      product: this.fb.control(null, [Validators.required]),
+      quantity: this.fb.control(0, [Validators.required]),
+    });    
     this.getPromotions();
     this.getResponsibles();
   }
 
   onSubmit() {
-    console.log('====================================');
-    console.log(this.newPromotion);
-    console.log('====================================');
-    // this.promotionService.createPromotion(this.newPromotion).subscribe(
-    //   (promotion) => {
-    //     this.promotions.push(promotion);
-    //     this.newPromotion = {
-    //       responsible: {} as Responsible,
-    //       categorie: {} as Category,
-    //       produit: {} as Product,
-    //       datepromo: '', 
-    //       reduction: 0,
-    //       statut: null, 
-    //       quantity: 0
-    //     }
-    //   })
+    this.newPromotion = {
+      responsible: {} as Responsible,
+      categorie: this.category.id = this.promotionForm.value.category,
+      produit: this.product.id = this.promotionForm.value.product,
+      datepromo: this.promotionForm.value.dateDebut,
+      reduction: this.promotionForm.value.precentage,
+      statut: this.promotionForm.value.status,
+      quantity: this.promotionForm.value.quantity,
+    };
+      
+    this.promotionService.createPromotion(this.newPromotion).subscribe(
+      (promotion) => {
+        this.promotions.push(promotion);
+        this.promotionForm.reset();
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
+  
 
   getPromotions() {
     this.promotionService.getPromotions().subscribe(

@@ -29,12 +29,12 @@ export class TableComponent implements OnInit {
     category: null
   };
   responsibles: Responsible[] = [];
-  // responsible: Responsible = {
-  //   id: 0,
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  // };
+  responsible: Responsible = {
+    id: 2,
+    name: '',
+    email: '',
+    password: '',
+  };
 
   category : Category = {
     id: 0,
@@ -52,9 +52,9 @@ export class TableComponent implements OnInit {
     { id: 2, name: 'Product 2', price: 15.49, quantity: 30, category: { id: 2, name: 'Category 2' } },
   ];
   newPromotion: Promotion = {
-    responsible: {} as Responsible,
-    categorie: this.category,
-    produit: this.product,
+    responsable_id: 0,
+    categorie_id: 0,
+    produit_id: 0,
     datepromo: '',
     reduction: 0,
     statut: 'PENDING',
@@ -77,14 +77,15 @@ export class TableComponent implements OnInit {
 
   onSubmit() {
     this.newPromotion = {
-      responsible: {} as Responsible,
-      categorie: this.category.id = this.promotionForm.value.category,
-      produit: this.product.id = this.promotionForm.value.product,
-      datepromo: this.promotionForm.value.dateDebut,
+      responsable_id: 2,
+      categorie_id:  this.promotionForm.value.category.id,
+      produit_id: this.promotionForm.value.product.id,
+      datepromo: "2023-06-14",
       reduction: this.promotionForm.value.precentage,
-      statut: this.promotionForm.value.status,
+      statut: "ACCEPTED",
       quantity: this.promotionForm.value.quantity,
     };
+      console.log(this.newPromotion);
       
     this.promotionService.createPromotion(this.newPromotion).subscribe(
       (promotion) => {

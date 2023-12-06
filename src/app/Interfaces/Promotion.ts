@@ -4,9 +4,9 @@ import { Responsible } from "./Responsible";
 
   export interface Promotion {
     id?: number;
-    responsible: Responsible;
-    categorie: Category;
-    produit: Product;
+    responsable_id: number;
+    categorie_id: number;
+    produit_id: number;
     datepromo: string; 
     reduction: number;
     statut: any;

@@ -19,7 +19,14 @@
           <a routerLink="AdminDashboard" class="text-sm font-semibold leading-6 text-gray-900">Admin Dashboard</a>
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a routerLink="login" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+          <ng-container *ngIf="isLoggedIn; else loginLink">
+            <!-- If user is logged in, show logout link -->
+            <a (click)="logout()" class="text-sm font-semibold leading-6 text-gray-900">Log out <span aria-hidden="true">&rarr;</span></a>
+          </ng-container>
+          <ng-template #loginLink>
+            <!-- If user is not logged in, show login link -->
+            <a routerLink="login" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+          </ng-template>
         </div>
       </nav>
   </header>

@@ -15,13 +15,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { TableComponent } from './components/tables/PromotionsTable/PromotionsTable.component';
 import { PopupComponent } from './components/popup/popup.component';
 import { ValidationTableComponent } from './components/tables/PromotionsValidationTable/validation-table.component';
+import { AuthGuard } from './auth.guard';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent},
-  { path: 'AdminDashboard', component: AdminDashboardComponent },
-  { path: 'ResponsableDashboard', component: ResponsableDashboardComponent },
+  { path: '', component: HomeComponent },
+  { path: 'AdminDashboard', component: AdminDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'ResponsableDashboard', component: ResponsableDashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  ];
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +45,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule
   ],
+  exports: [RouterModule],
   providers: [],
   bootstrap: [AppComponent]
 })

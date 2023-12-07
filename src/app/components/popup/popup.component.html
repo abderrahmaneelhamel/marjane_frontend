@@ -1,7 +1,7 @@
 <button (click)="Toggle()" [ngClass]="'border-'+color+'-500  text-'+color+'-500 hover:bg-'+color+'-700'" class="block px-5 py-2 border rounded transition duration-300 hover:text-white focus:outline-none" type="button">
     {{ name }}
   </button>
-  <div [ngClass]="hidden==true ? 'hidden' : ''"  class="bg-slate-100 flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full  h-[calc(100%-1rem)] max-h-full">
+  <div [ngClass]="hidden == true ? 'hidden' : ''"  class="bg-slate-100 flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full  h-[calc(100%-1rem)] max-h-full">
       <div class="relative p-4 w-full max-w-md max-h-full">
           <div class="relative bg-white rounded-lg ">
               <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">

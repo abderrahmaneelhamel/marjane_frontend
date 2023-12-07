@@ -18,12 +18,16 @@ export class TableComponent implements OnInit {
 
   private readonly PENDING_STATUS = 'PENDING';
 
+  pageSize = 2;
+  currentPage = 1;
+
   public promotionForm! : FormGroup;
   public promotionUpdateForm!: FormGroup;
 
 
-  constructor(private responsibleService: ResponsibleService, private fb: FormBuilder, private promotionService: PromotionService){}
+  constructor(private fb: FormBuilder, private promotionService: PromotionService){}
   public promotions : any;
+  public allPromotions : any;
 
   product: Product = {
     id: 0,
@@ -65,9 +69,38 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForms();
     this.getPromotions();
-    this.getResponsibles();
+    this.getAllPromotions();
   }
 
+  // Pagination methods
+  goToPage(pageNumber: number) {
+    this.currentPage = pageNumber;
+    console.log('Current Page:', this.currentPage);
+    this.getPromotions();
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.goToPage(this.currentPage + 1);
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.goToPage(this.currentPage - 1);
+    }
+  }
+
+  get totalPages(): number {    
+    return this.promotions ? Math.ceil(this.allPromotions.length / this.pageSize) : 0;
+  }
+  
+  get totalPagesArray(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+
+  
   private initializeForms(){
     this.promotionForm = this.initializeForm();    
     this.promotionUpdateForm = this.initializeForm();
@@ -173,20 +206,15 @@ export class TableComponent implements OnInit {
   
 
   getPromotions() {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    console.log('==============555555555======================');
+    console.log(startIndex,endIndex);
+    console.log('==============555555555======================');
+  
     this.promotionService.getPromotions().subscribe(
       (promotions) => {
-        this.promotions = promotions;
-        console.log(this.promotions);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-  getPendingPromotions(){
-    this.promotionService.getPromotions().subscribe(
-      (promotions) => {
-        this.promotions = promotions.filter(promotions => promotions.statut == "PENDING");
+        this.promotions = promotions.slice(startIndex, endIndex);
         console.log(this.promotions);
       },
       (error) => {
@@ -195,11 +223,11 @@ export class TableComponent implements OnInit {
     );
   }
 
-  getResponsibles() {
-    this.responsibleService.getResponisbles().subscribe(
-      (responsibles) => {
-        this.responsibles = responsibles;
-        console.log(this.responsibles);
+  getAllPromotions(){
+    this.promotionService.getPromotions().subscribe(
+      (promotions) => {
+        this.allPromotions = promotions;
+        console.log(this.allPromotions);
       },
       (error) => {
         console.error(error);

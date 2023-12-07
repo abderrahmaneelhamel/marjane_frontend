@@ -26,7 +26,7 @@ export class PromotionService {
   }
 
   updatePromotion(promotion: Promotion): Observable<Promotion> {
-    const url = `${this.apiUrl}/${promotion.id}`;
+    const url = `${this.apiUrl}/update/${promotion.id}`;
     return this.http.put<Promotion>(url, promotion);
   }
 }

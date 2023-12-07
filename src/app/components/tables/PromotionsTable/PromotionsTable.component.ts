@@ -6,6 +6,8 @@ import { Promotion } from '../../../Interfaces/Promotion';
 import { Category } from 'src/app/Interfaces/Category';
 import { Product } from 'src/app/Interfaces/Product';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-table',
@@ -111,9 +113,22 @@ export class TableComponent implements OnInit {
         this.promotions.push(promotion);
         console.log(promotion);
         this.promotionForm.reset();
+  
+        Swal.fire({
+          title: 'Success!',
+          text: 'Promotion created successfully.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
       },
       (error) => {
         console.error('Error creating promotion:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to create promotion. Please try again.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       }
     );
   }
@@ -137,9 +152,21 @@ export class TableComponent implements OnInit {
         console.log('Promotion updated:', response);
         this.promotionUpdateForm.reset();
         this.getPromotions();
+        Swal.fire({
+          title: 'Success!',
+          text: 'Promotion updated successfully.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
       },
       (error) => {
         console.error('Error updating promotion:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to update promotion. Please try again.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       }
     );
   }
@@ -202,5 +229,24 @@ export class TableComponent implements OnInit {
         console.error('Error deleting promotion:', error);
       }
     );
+  }
+  deletePromotionConfirmation(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deletePromotion(id);
+        console.log('Deleting promotion...');
+        Swal.fire('Deleted!', 'Your promotion has been deleted.', 'success');
+      } else {
+        console.log('Delete canceled by user.');
+      }
+    });
   }
 }

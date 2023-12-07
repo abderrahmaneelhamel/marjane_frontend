@@ -19,7 +19,7 @@ export class TableComponent implements OnInit {
 
   constructor(private responsibleService: ResponsibleService, private fb: FormBuilder, private promotionService: PromotionService){
     
-  }
+}
   public promotions : any;
 
   product: Product = {

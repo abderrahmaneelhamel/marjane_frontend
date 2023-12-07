@@ -17,9 +17,7 @@ export class TableComponent implements OnInit {
   public promotionForm! : FormGroup;
 
 
-  constructor(private responsibleService: ResponsibleService, private fb: FormBuilder, private promotionService: PromotionService){
-    
-  }
+  constructor(private responsibleService: ResponsibleService, private fb: FormBuilder, private promotionService: PromotionService){}
   public promotions : any;
   product: Product = {
     id: 0,
@@ -35,13 +33,10 @@ export class TableComponent implements OnInit {
     email: '',
     password: '',
   };
-
   category : Category = {
     id: 0,
     name: '',
   };
-
-
   categories: Category[] = [
     { id: 1, name: 'Alimentation' },
     { id: 2, name: 'Vêtements' },
@@ -60,8 +55,6 @@ export class TableComponent implements OnInit {
     statut: 'PENDING',
     quantity: 0
   };
-  
-
 
   ngOnInit(): void {
     this.promotionForm = this.fb.group({
@@ -72,7 +65,7 @@ export class TableComponent implements OnInit {
       quantity: this.fb.control(0, [Validators.required]),
     });    
     this.getPromotions();
-    this.getResponsibles();
+    this.getResponsibles();    
   }
 
   onSubmit() {
@@ -82,14 +75,14 @@ export class TableComponent implements OnInit {
       produit_id: this.promotionForm.value.product.id,
       datepromo: "2023-06-14",
       reduction: this.promotionForm.value.precentage,
-      statut: "ACCEPTED",
+      statut: "PENDING",
       quantity: this.promotionForm.value.quantity,
     };
-      console.log(this.newPromotion);
       
     this.promotionService.createPromotion(this.newPromotion).subscribe(
       (promotion) => {
         this.promotions.push(promotion);
+        console.log(promotion);
         this.promotionForm.reset();
       },
       (error) => {
@@ -122,18 +115,6 @@ export class TableComponent implements OnInit {
       }
     );
   }
-
-  // createPromotion() {
-  //   this.promotionService.createPromotion(this.newPromotion).subscribe(
-  //     (createdPromotion) => {
-  //       console.log('Promotion created:', createdPromotion);
-  //       this.getPromotions();
-  //     },
-  //     (error) => {
-  //       console.error('Error creating promotion:', error);
-  //     }
-  //   );
-  // }
 
   updatePromotion(promotion: Promotion) {
     this.promotionService.updatePromotion(promotion).subscribe(

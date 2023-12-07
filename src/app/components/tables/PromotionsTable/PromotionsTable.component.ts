@@ -72,6 +72,7 @@ export class TableComponent implements OnInit {
   }
   private initializeForm(): FormGroup {
     return this.fb.group({
+      id: this.fb.control(null),
       datepromo: this.fb.control('', [Validators.required]),
       precentage: this.fb.control(0, [Validators.required]),
       category: this.fb.control(null, [Validators.required]),
@@ -83,6 +84,7 @@ export class TableComponent implements OnInit {
     const promotionDate = new Date(promotion.datepromo);
   
     this.promotionUpdateForm.patchValue({
+      id: promotion.id,
       precentage: promotion.reduction,
       category: promotion.categorie,
       product: promotion.produit,
@@ -119,12 +121,16 @@ export class TableComponent implements OnInit {
 
   onUpdate() {
     const updatedPromotion: any = {
+      id: this.promotionUpdateForm.value.id,
+      responsable_id: 2,
       reduction: this.promotionUpdateForm.value.precentage,
       categorie_id: this.promotionUpdateForm.value.category.id,
       produit_id: this.promotionUpdateForm.value.product.id,
       quantity: this.promotionUpdateForm.value.quantity,
+      statut: this.PENDING_STATUS,
       datepromo: this.promotionUpdateForm.value.datepromo,
     };
+    console.log(updatedPromotion);
 
     this.promotionService.updatePromotion(updatedPromotion).subscribe(
       (response) => {

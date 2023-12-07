@@ -14,6 +14,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TableComponent } from './components/tables/PromotionsTable/PromotionsTable.component';
 import { PopupComponent } from './components/popup/popup.component';
+import { ValidationTableComponent } from './components/tables/PromotionsValidationTable/validation-table.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent},
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
     LoginComponent,
     HeaderComponent,
     TableComponent,
-    PopupComponent
+    PopupComponent,
+    ValidationTableComponent
   ],
   imports: [
     BrowserModule,

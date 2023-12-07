@@ -17,10 +17,10 @@ export class TableComponent implements OnInit {
   public promotionForm! : FormGroup;
 
 
-  constructor(private responsibleService: ResponsibleService, private fb: FormBuilder, private promotionService: PromotionService){
-    
-  }
+  constructor(private responsibleService: ResponsibleService, private fb: FormBuilder, private promotionService: PromotionService){}
+
   public promotions : any;
+
   product: Product = {
     id: 0,
     name: '',
@@ -71,7 +71,7 @@ export class TableComponent implements OnInit {
       product: this.fb.control(null, [Validators.required]),
       quantity: this.fb.control(0, [Validators.required]),
     });    
-    this.getPromotions();
+    this.getPendingPromotions();
     this.getResponsibles();
   }
 
@@ -82,7 +82,7 @@ export class TableComponent implements OnInit {
       produit_id: this.promotionForm.value.product.id,
       datepromo: "2023-06-14",
       reduction: this.promotionForm.value.precentage,
-      statut: "ACCEPTED",
+      statut: "PENDING",
       quantity: this.promotionForm.value.quantity,
     };
       console.log(this.newPromotion);
@@ -103,6 +103,17 @@ export class TableComponent implements OnInit {
     this.promotionService.getPromotions().subscribe(
       (promotions) => {
         this.promotions = promotions;
+        console.log(this.promotions);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  getPendingPromotions(){
+    this.promotionService.getPromotions().subscribe(
+      (promotions) => {
+        this.promotions = promotions.filter(promotions => promotions.statut == "PENDING");
         console.log(this.promotions);
       },
       (error) => {

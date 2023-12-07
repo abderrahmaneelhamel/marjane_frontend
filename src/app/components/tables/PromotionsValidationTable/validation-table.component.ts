@@ -13,6 +13,13 @@ export class ValidationTableComponent implements OnInit {
 
   public promotions: any;
   public responsibles: Responsible[] = [];
+  public currentPage = 1;
+  public itemsPerPage = 10;
+  public perPage: number = 10;
+  public total: number = 100;
+  public totalItems = 0;
+  public pagination: any;
+
 
 
   constructor(
@@ -37,18 +44,19 @@ export class ValidationTableComponent implements OnInit {
     );
   }
 
-  getPendingPromotions() {
-    this.promotionService.getPromotions().subscribe(
-      (promotions) => {
-        this.promotions = promotions.filter(promotion => promotion.statut === 'PENDING');
-        console.log(this.promotions);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
+  // getPendingPromotions() {
+  //   this.promotionService.getPromotions().subscribe(
+  //     (promotions) => {
+  //       this.promotions = promotions.filter(promotion => promotion.statut === 'PENDING');
+  //       console.log(this.promotions);
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
+  
+  
   getResponsibles() {
     this.responsibleService.getResponisbles().subscribe(
       (responsibles) => {
@@ -113,5 +121,37 @@ export class ValidationTableComponent implements OnInit {
       }
     );
   }
-  
+  get totalPages(): number[] {
+    return Array.from({ length: Math.ceil(this.totalItems / this.itemsPerPage) }, (_, index) => index + 1);
+  }
+
+  getPendingPromotions() {
+    this.promotionService.getPromotions().subscribe(
+      (promotions) => {
+        this.totalItems = promotions.filter(promotion => promotion.statut === 'PENDING').length;
+        this.promotions = promotions.filter(promotion => promotion.statut === 'PENDING')
+          .slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage);
+        console.log(this.promotions);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  changePage(page: number) {
+    console.log('Changing page to:', page);
+    if (page >= 1 && page <= this.totalPages.length) {
+      this.currentPage = page;
+      this.getPendingPromotions();
+    }
+  }
+
+  getMinValue(currentPage: number, perPage: number, total: number): number {
+    return Math.min(currentPage * perPage, total);
+  }
+
+  getMaxValue(currentPage: number, perPage: number, total: number): number {
+    return Math.min((currentPage + 1) * perPage, total);
+  }  
 }

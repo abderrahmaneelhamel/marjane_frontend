@@ -14,12 +14,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class TableComponent implements OnInit {
 
+  private readonly PENDING_STATUS = 'PENDING';
+
   public promotionForm! : FormGroup;
+  public promotionUpdateForm!: FormGroup;
 
 
-  constructor(private responsibleService: ResponsibleService, private fb: FormBuilder, private promotionService: PromotionService){
-    
-}
+  constructor(private responsibleService: ResponsibleService, private fb: FormBuilder, private promotionService: PromotionService){}
   public promotions : any;
 
   product: Product = {
@@ -55,33 +56,54 @@ export class TableComponent implements OnInit {
     produit_id: 0,
     datepromo: '',
     reduction: 0,
-    statut: 'PENDING',
+    statut: this.PENDING_STATUS,
     quantity: 0
   };
 
   ngOnInit(): void {
-    this.promotionForm = this.fb.group({
-      dateDebut: this.fb.control('', [Validators.required]),
-      precentage: this.fb.control(0, [Validators.required]),
-      category: this.fb.control(null, [Validators.required]),
-      product: this.fb.control(null, [Validators.required]),
-      quantity: this.fb.control(0, [Validators.required]),
-    });    
+    this.initializeForms();
     this.getPromotions();
     this.getResponsibles();
   }
 
+  private initializeForms(){
+    this.promotionForm = this.initializeForm();    
+    this.promotionUpdateForm = this.initializeForm();
+  }
+  private initializeForm(): FormGroup {
+    return this.fb.group({
+      datepromo: this.fb.control('', [Validators.required]),
+      precentage: this.fb.control(0, [Validators.required]),
+      category: this.fb.control(null, [Validators.required]),
+      product: this.fb.control(null, [Validators.required]),
+      quantity: this.fb.control(0, [Validators.required]),
+    });
+  }
+  populateUpdateForm(promotion: any) {
+    const promotionDate = new Date(promotion.datepromo);
+  
+    this.promotionUpdateForm.patchValue({
+      precentage: promotion.reduction,
+      category: promotion.categorie,
+      product: promotion.produit,
+      quantity: promotion.quantity,
+      datepromo: promotionDate.toISOString().split('T')[0],
+    });
+  }
+
   onSubmit() {
+    const { category, product, precentage, quantity, datepromo } = this.promotionForm.value;
+  
     this.newPromotion = {
       responsable_id: 2,
-      categorie_id:  this.promotionForm.value.category.id,
-      produit_id: this.promotionForm.value.product.id,
-      datepromo: "2023-06-14",
-      reduction: this.promotionForm.value.precentage,
-      statut: "PENDING",
-      quantity: this.promotionForm.value.quantity,
+      categorie_id: category.id,
+      produit_id: product.id,
+      datepromo: datepromo,
+      reduction: precentage,
+      statut: this.PENDING_STATUS,
+      quantity,
     };
-      
+  
     this.promotionService.createPromotion(this.newPromotion).subscribe(
       (promotion) => {
         this.promotions.push(promotion);
@@ -89,7 +111,29 @@ export class TableComponent implements OnInit {
         this.promotionForm.reset();
       },
       (error) => {
-        console.error(error);
+        console.error('Error creating promotion:', error);
+      }
+    );
+  }
+  
+
+  onUpdate() {
+    const updatedPromotion: any = {
+      reduction: this.promotionUpdateForm.value.precentage,
+      categorie_id: this.promotionUpdateForm.value.category.id,
+      produit_id: this.promotionUpdateForm.value.product.id,
+      quantity: this.promotionUpdateForm.value.quantity,
+      datepromo: this.promotionUpdateForm.value.datepromo,
+    };
+
+    this.promotionService.updatePromotion(updatedPromotion).subscribe(
+      (response) => {
+        console.log('Promotion updated:', response);
+        this.promotionUpdateForm.reset();
+        this.getPromotions();
+      },
+      (error) => {
+        console.error('Error updating promotion:', error);
       }
     );
   }

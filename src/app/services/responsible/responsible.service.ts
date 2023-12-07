@@ -7,7 +7,7 @@ import { Responsible } from 'src/app/Interfaces/Responsible';
   providedIn: 'root'
 })
 export class ResponsibleService {
-  private apiUrl: string = "https://20b0-197-230-250-154.ngrok.io/api/v3/responsibles";
+  private apiUrl: string = "http://localhost:8080/api/v3/responsibles";
 
   constructor(private http : HttpClient) { }
 

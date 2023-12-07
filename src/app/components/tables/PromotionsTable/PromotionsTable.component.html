@@ -11,16 +11,27 @@
           </div>
           <div class="col-span-2 sm:col-span-1">
             <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-            <select id="categorySelect" formControlName="category">
+            <select formControlName="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                 <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
             </select> 
           </div>
           <div class="col-span-2 sm:col-span-1">
             <label for="product" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product</label>
-            <select formControlName="product">
+            <select formControlName="product" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                 <option *ngFor="let product of products" [ngValue]="product">{{ product.name }}</option>
             </select>
           </div>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <label for="datepromo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Promotion Date</label>
+          <input
+            type="date"
+            formControlName="datepromo"
+            id="datepromo"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder="Select Date"
+            required
+          />
         </div>
         <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
@@ -83,35 +94,62 @@
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-blue-900 text-sm leading-5">{{ promotion.statut }}</td>
                         <td class="px-6 py-4 flex justify-between text-right border-b border-gray-500 text-sm leading-5">
                             <button (click)="deletePromotion(promotion.id)" class="px-5 py-2 border-red-500 border text-red-500 rounded transition duration-300 hover:bg-red-700 hover:text-white focus:outline-none">Delete</button>
-                            <app-popup name="edit" color="blue">
-                              <form [formGroup]="promotionForm" class="p-4 md:p-5" (ngSubmit)="onSubmit()">
+                            <app-popup [isEditForm]="true" (populateUpdateForm)="populateUpdateForm(promotion)" name="edit" color="blue">
+                              <form [formGroup]="promotionUpdateForm" class="p-4 md:p-5" (ngSubmit)="onUpdate()">
                                 <div class="grid gap-4 mb-4 grid-cols-2">
                                   <div class="col-span-2 sm:col-span-1">
                                     <label for="discount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discount Percentage</label>
-                                    <input type="number" formControlName="precentage" id="discount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="9" required="">
+                                    <input type="number" formControlName="precentage" id="discount"
+                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                      placeholder="9" required="">
                                   </div>
                                   <div class="col-span-2 sm:col-span-1">
                                     <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
-                                    <input type="number" formControlName="quantity" id="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="99" required="">
+                                    <input type="number" formControlName="quantity" id="quantity"
+                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                      placeholder="99" required="">
                                   </div>
                                   <div class="col-span-2 sm:col-span-1">
                                     <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                                     <select id="categorySelect" formControlName="category">
-                                        <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
-                                    </select> 
+                                      <option *ngFor="let category of categories" [ngValue]="category"
+                                        [selected]="category.id === promotionUpdateForm.controls['category'].value?.id">
+                                        {{ category.name }}
+                                      </option>
+                                    </select>
                                   </div>
                                   <div class="col-span-2 sm:col-span-1">
                                     <label for="product" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product</label>
                                     <select formControlName="product">
-                                        <option *ngFor="let product of products" [ngValue]="product">{{ product.name }}</option>
+                                      <option *ngFor="let product of products" [ngValue]="product"
+                                        [selected]="product.id === promotionUpdateForm.controls['product'].value?.id">
+                                        {{ product.name }}
+                                      </option>
                                     </select>
                                   </div>
                                 </div>
-                                <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                  <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                                  Add new Promotion
+                                <div class="col-span-2 sm:col-span-1">
+                                  <label for="datepromo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Promotion Date</label>
+                                  <input
+                                    type="date"
+                                    formControlName="datepromo"
+                                    id="datepromo"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Select Date"
+                                    required
+                                  />
+                                </div>
+                                <button type="submit"
+                                  class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                  <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                      clip-rule="evenodd"></path>
+                                  </svg>
+                                  Update Promotion
                                 </button>
                               </form>
+
                             </app-popup>
                         </td>
               </tr>

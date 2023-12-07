@@ -8,7 +8,7 @@ import { Promotion } from '../../Interfaces/Promotion';
 })
 export class PromotionService {
 
-  private apiUrl: string = "http://localhost:8080/api/v3/promotions";
+  private apiUrl: string = "https://20b0-197-230-250-154.ngrok.io/api/v3/promotions";
 
   constructor(private http: HttpClient) {}
 

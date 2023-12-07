@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ResponsibleService } from '../../../services/responsible/responsible.service';
 import { PromotionService } from 'src/app/services/promotion/promotion.service';
 import { Responsible } from '../../../Interfaces/Responsible';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-validation-table',
@@ -20,7 +21,7 @@ export class ValidationTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getPromotions();
+    this.getPendingPromotions();
     this.getResponsibles();
   }
 
@@ -62,10 +63,22 @@ export class ValidationTableComponent implements OnInit {
 
   acceptPromotion(promotionId: any) {
     this.updatePromotionStatus(promotionId, 'ACCEPTED');
+    Swal.fire({
+      title: 'Success!',
+      text: 'Promotion accepted.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+    });
   }
 
   refusePromotion(promotionId: any) {
     this.updatePromotionStatus(promotionId, 'REFUSED');
+    Swal.fire({
+      title: 'Refused!',
+      text: 'Promotion Refused.',
+      icon: 'error',
+      confirmButtonText: 'OK',
+    });
   }
 
   private updatePromotionStatus(promotionId: any, status: string) {
@@ -93,7 +106,7 @@ export class ValidationTableComponent implements OnInit {
     this.promotionService.updatePromotion(updatedPromotion).subscribe(
       (response) => {
         console.log(`Promotion ${status.toLowerCase()}ed:`, response);
-        this.getPromotions();
+        this.getPendingPromotions();
       },
       (error) => {
         console.error(`Error ${status.toLowerCase()}ing promotion:`, error);

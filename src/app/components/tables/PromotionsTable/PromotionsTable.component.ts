@@ -20,6 +20,7 @@ export class TableComponent implements OnInit {
 
   pageSize = 2;
   currentPage = 1;
+  public totalItems = 0;
 
   public promotionForm! : FormGroup;
   public promotionUpdateForm!: FormGroup;
@@ -27,7 +28,6 @@ export class TableComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private promotionService: PromotionService){}
   public promotions : any;
-  public allPromotions : any;
 
   product: Product = {
     id: 0,
@@ -69,7 +69,6 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForms();
     this.getPromotions();
-    this.getAllPromotions();
   }
 
   // Pagination methods
@@ -92,7 +91,7 @@ export class TableComponent implements OnInit {
   }
 
   get totalPages(): number {    
-    return this.promotions ? Math.ceil(this.allPromotions.length / this.pageSize) : 0;
+    return this.promotions ? Math.ceil(this.totalItems / this.pageSize) : 0;
   }
   
   get totalPagesArray(): number[] {
@@ -208,26 +207,12 @@ export class TableComponent implements OnInit {
   getPromotions() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    console.log('==============555555555======================');
-    console.log(startIndex,endIndex);
-    console.log('==============555555555======================');
   
     this.promotionService.getPromotions().subscribe(
       (promotions) => {
+        this.totalItems = promotions.length;
         this.promotions = promotions.slice(startIndex, endIndex);
         console.log(this.promotions);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  getAllPromotions(){
-    this.promotionService.getPromotions().subscribe(
-      (promotions) => {
-        this.allPromotions = promotions;
-        console.log(this.allPromotions);
       },
       (error) => {
         console.error(error);

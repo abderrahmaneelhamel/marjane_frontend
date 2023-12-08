@@ -12,12 +12,14 @@
           <div class="col-span-2 sm:col-span-1">
             <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
             <select formControlName="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option selected value="">Select a category</option>
                 <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
             </select> 
           </div>
           <div class="col-span-2 sm:col-span-1">
             <label for="product" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product</label>
             <select formControlName="product" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option selected value="">Select a Product</option>
                 <option *ngFor="let product of products" [ngValue]="product">{{ product.name }}</option>
             </select>
           </div>
@@ -142,16 +144,6 @@
         
 
 <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
-  <div>
-    <!-- <p class="text-sm leading-5 text-blue-700">
-      <span class="font-medium">{{ (currentPage - 1) * pageSize + 1 }}</span>
-      to
-      <span class="font-medium">{{ Math.min(currentPage * pageSize, promotions?.length || 0) }}</span>
-      of
-      <span class="font-medium">{{ promotions?.length || 0 }}</span>
-      results
-    </p> -->
-  </div>
   <div>
     <nav class="relative z-0 inline-flex shadow-sm">
       <div>

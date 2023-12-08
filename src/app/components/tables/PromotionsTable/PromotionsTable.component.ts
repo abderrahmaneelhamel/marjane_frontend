@@ -7,6 +7,8 @@ import { Category } from 'src/app/Interfaces/Category';
 import { Product } from 'src/app/Interfaces/Product';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { CategoriesService } from 'src/app/services/category/categories.service';
+import { ProductsService } from 'src/app/services/products/products.service';
 
 
 @Component({
@@ -26,7 +28,7 @@ export class TableComponent implements OnInit {
   public promotionUpdateForm!: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private promotionService: PromotionService){}
+  constructor(private fb: FormBuilder, private promotionService: PromotionService,private categoryService: CategoriesService,private productService: ProductsService){}
   public promotions : any;
 
   product: Product = {
@@ -47,15 +49,8 @@ export class TableComponent implements OnInit {
     id: 0,
     name: '',
   };
-  categories: Category[] = [
-    { id: 1, name: 'Alimentation' },
-    { id: 2, name: 'Vêtements' },
-    { id: 3, name: 'Produits de parfum' }
-  ];
-  products: Product[] = [
-    { id: 1, name: 'Product 1', price: 20.99, quantity: 50, category: { id: 1, name: 'Category 1' } },
-    { id: 2, name: 'Product 2', price: 15.49, quantity: 30, category: { id: 2, name: 'Category 2' } },
-  ];
+  categories : Category[] = [];
+  products : Product[] = [];
   newPromotion: Promotion = {
     responsable_id: 0,
     categorie_id: 0,
@@ -69,6 +64,8 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForms();
     this.getPromotions();
+    this.getCategories();
+    this.getProducts();
   }
 
   // Pagination methods
@@ -213,6 +210,28 @@ export class TableComponent implements OnInit {
         this.totalItems = promotions.length;
         this.promotions = promotions.slice(startIndex, endIndex);
         console.log(this.promotions);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  getProducts() {
+    this.productService.getProducts().subscribe(
+      (products) => {
+        this.products = products;
+        console.log(this.products);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  getCategories() {
+    this.categoryService.getCategories().subscribe(
+      (categories) => {
+        this.categories = categories;
+        console.log(this.categories);
       },
       (error) => {
         console.error(error);

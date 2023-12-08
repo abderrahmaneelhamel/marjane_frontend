@@ -1,5 +1,5 @@
 <app-popup name="Add Promotion" color="blue"> 
-    <form [formGroup]="promotionForm" class="p-4 md:p-5" (ngSubmit)="onSubmit()">
+    <form [formGroup]="promotionForm" class="p-4 md:p-5" (ngSubmit)="onSubmit()" style="margin-top: 25px;">
         <div class="grid gap-4 mb-4 grid-cols-2">
           <div class="col-span-2 sm:col-span-1">
             <label for="discount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discount Percentage</label>
@@ -40,7 +40,7 @@
       </form>
       
 </app-popup>
-  <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+  <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8" style="margin-top: 50px;">
     <div class="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
         <table class="min-w-full">
             <thead>
@@ -141,7 +141,7 @@
         </table>
         
 
-        <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
+<div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
   <div>
     <!-- <p class="text-sm leading-5 text-blue-700">
       <span class="font-medium">{{ (currentPage - 1) * pageSize + 1 }}</span>

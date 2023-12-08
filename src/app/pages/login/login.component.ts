@@ -9,18 +9,18 @@ import { AuthenticationService } from 'src/app/services/auth/authentication.serv
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  // Declare variables for email and password
+
   email: string = '';
   password: string = '';
 
   constructor(private authService: AuthenticationService, private router: Router) { }
 
-  // Function to handle login
+
   login() {
     this.authService.login(this.email, this.password).subscribe(
       (response) => {
         this.authService.handleLoginSuccess(response);
-
+        this.router.navigate(['/AdminDashboard']);
       },
       (error) => {
         console.error('Login failed:', error);
